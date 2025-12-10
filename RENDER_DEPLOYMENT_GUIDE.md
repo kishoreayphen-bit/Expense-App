@@ -31,9 +31,29 @@ This method uses the `render.yaml` file to automatically set up both the databas
    - Web Service: `expenseapp-backend` (Docker, Free tier)
    - Region: Singapore (or choose your preferred region)
 
-4. **Set Required Environment Variables**
+4. **IMPORTANT: Fix Database URL Format**
    
-   Before deploying, you need to set these variables manually in the Render dashboard:
+   After the Blueprint creates the services, you MUST manually fix the database URL:
+   
+   a. Go to your **PostgreSQL database** in Render dashboard
+   b. Copy the **Internal Database URL** (looks like: `postgres://user:pass@host:5432/db`)
+   c. Go to your **Web Service** → **Environment** tab
+   d. Find `SPRING_DATASOURCE_URL` and edit it
+   e. Change the URL format from `postgres://` to `jdbc:postgresql://`
+   f. Remove username and password from URL (they're in separate variables)
+   
+   **Example:**
+   ```
+   # Original (from Render):
+   postgres://expenseapp:abc123@dpg-xxx.singapore-postgres.render.com:5432/expenseapp_db
+   
+   # Change to:
+   jdbc:postgresql://dpg-xxx.singapore-postgres.render.com:5432/expenseapp_db
+   ```
+
+5. **Set Optional Environment Variables**
+   
+   In the Render dashboard, set these if you have them:
    
    **Email Configuration (Optional but recommended):**
    ```
@@ -47,18 +67,21 @@ This method uses the `render.yaml` file to automatically set up both the databas
    STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
    ```
 
-5. **Deploy**
+6. **Deploy**
    - Click "Apply" to create the services
+   - Wait for the build to complete (~5-10 minutes)
+   - After deployment, manually trigger a redeploy to apply the database URL fix
    - Render will:
      - Create PostgreSQL database
      - Build Docker image from your backend
      - Deploy the application
      - Run Flyway migrations automatically
 
-6. **Wait for Deployment**
+7. **Verify Deployment**
    - Initial build takes 5-10 minutes
    - Watch the logs for any errors
    - Once deployed, you'll get a URL like: `https://expenseapp-backend.onrender.com`
+   - Test the health endpoint: `https://your-app.onrender.com/actuator/health`
 
 ### Option 2: Manual Deployment
 
