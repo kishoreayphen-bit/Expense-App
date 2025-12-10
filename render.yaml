@@ -1,0 +1,72 @@
+databases:
+  # PostgreSQL Database (Managed by Render)
+  - name: expenseapp-db
+    databaseName: expenseapp
+    user: expenseapp
+    plan: free
+    region: singapore
+
+services:
+  # Spring Boot Backend
+  - type: web
+    name: expenseapp-backend
+    env: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      # Database Configuration (Auto-populated from database)
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: expenseapp-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: expenseapp-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: expenseapp-db
+          property: password
+      
+      # JWT Configuration
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 86400000
+      - key: REFRESH_TOKEN_EXPIRATION
+        value: 604800000
+      
+      # Email Configuration (Brevo/Sendinblue) - Set these manually
+      - key: SPRING_MAIL_HOST
+        value: smtp-relay.brevo.com
+      - key: SPRING_MAIL_PORT
+        value: 587
+      - key: SPRING_MAIL_USERNAME
+        sync: false
+      - key: SPRING_MAIL_PASSWORD
+        sync: false
+      
+      # Stripe Configuration - Set these manually
+      - key: STRIPE_API_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      
+      # Application Configuration
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SERVER_PORT
+        value: 8080
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: validate
+      - key: SPRING_FLYWAY_ENABLED
+        value: true
+      
+      # CORS Configuration
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+    
+    healthCheckPath: /actuator/health
+    autoDeploy: true
