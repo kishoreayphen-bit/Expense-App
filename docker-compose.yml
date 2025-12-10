@@ -1,0 +1,115 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: expense_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-expenses}
+      POSTGRES_USER: ${POSTGRES_USER:-expense_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-expense_pass}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-expense_user} -d ${POSTGRES_DB:-expenses}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: expense_frontend
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    networks:
+      - backend
+
+  company_service:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: expense_company_service
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-expenses}
+      DB_USER: ${POSTGRES_USER:-expense_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-expense_pass}
+      PORT: 8081
+    ports:
+      - "0.0.0.0:${COMPANY_PORT:-18081}:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: expense_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: expense_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-docker}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-expenses}
+      DB_USER: ${POSTGRES_USER:-expense_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-expense_pass}
+      JAVA_OPTS: ${JAVA_OPTS:- -Xms256m -Xmx512m}
+      STORAGE_DIR: ${STORAGE_DIR:-/app/storage}
+      # SMTP Email Configuration
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:19006}
+      # Stripe Payment Configuration
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    ports:
+      - "0.0.0.0:${BACKEND_PORT:-18080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - backend_storage:/app/storage
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  pg_data:
+  backend_storage:

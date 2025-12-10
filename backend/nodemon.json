@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "java",
+  "ignore": ["target/*", "*.class"],
+  "exec": "mvn clean package -DskipTests && echo 'Backend rebuilt successfully!'"
+}

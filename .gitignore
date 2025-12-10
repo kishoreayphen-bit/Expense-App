@@ -1,0 +1,81 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+*/node_modules/
+backend/target/
+backend/.gradle/
+backend/build/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Mobile
+mobile/.expo/
+mobile/.expo-shared/
+mobile/dist/
+mobile/web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Backend
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/bin/
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# Build outputs
+build/
+dist/
+out/
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Credentials (keep .env.example but ignore actual .env)
+# .env is already listed above

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login</title>
+    <script>
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('http://localhost:8080/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('result').innerHTML = `
+                        <h3>Login Successful!</h3>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                } else {
+                    document.getElementById('result').innerHTML = `
+                        <h3>Login Failed (${response.status} ${response.statusText})</h3>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Error</h3>
+                    <pre>${error}</pre>
+                `;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Login</h1>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" value="test@example.com">
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" value="admin123">
+    </div>
+    <button onclick="login()">Login</button>
+    <div id="result"></div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: expense_backend_dev
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-docker}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-expenses}
+      DB_USER: ${POSTGRES_USER:-expense_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-expense_pass}
+      JAVA_OPTS: ${JAVA_OPTS:- -Xms256m -Xmx512m}
+      STORAGE_DIR: ${STORAGE_DIR:-/app/storage}
+      # SMTP Email Configuration
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      FROM_EMAIL: ${FROM_EMAIL}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:19006}
+      # Enable Spring Boot DevTools
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    ports:
+      - "0.0.0.0:${BACKEND_PORT:-18080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - backend_storage:/app/storage
+      # Mount source code for hot reload
+      - ./backend/src:/app/src:ro
+      - ./backend/pom.xml:/app/pom.xml:ro
+      # Maven cache to speed up rebuilds
+      - maven_cache:/root/.m2
+    networks:
+      - backend
+    command: >
+      sh -c "
+        echo '🚀 Starting backend in development mode with auto-rebuild...' &&
+        mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Xms256m -Xmx512m'
+      "
+
+volumes:
+  maven_cache:

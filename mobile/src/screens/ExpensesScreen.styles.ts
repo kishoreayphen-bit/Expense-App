@@ -1,0 +1,401 @@
+import { StyleSheet, Platform, StatusBar } from 'react-native';
+
+export const styles = StyleSheet.create({
+  // Layout
+  container: {
+    flex: 1,
+    backgroundColor: '#F8FAFC',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 0) + 4 : 4,
+    paddingBottom: 20,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 0,
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 6,
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontWeight: '900',
+    color: '#1E293B',
+    letterSpacing: -0.8,
+  },
+  headerSubtitle: {
+    fontSize: 15,
+    color: '#64748b',
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  filterButton: {
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  
+  // Summary Cards - Modern & Responsive
+  summaryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 10,
+  },
+  summaryCard: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 14,
+    alignItems: 'center',
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: '#E0F2FE',
+  },
+  summaryLabel: {
+    fontSize: 12,
+    color: '#64748b',
+    marginBottom: 6,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+    alignSelf: 'center',
+    maxWidth: '100%',
+  },
+  summaryValue: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#1a202c',
+    letterSpacing: -0.3,
+  },
+
+  // List Content - Optimized Spacing
+  listContent: {
+    paddingHorizontal: 16,
+    paddingTop: 0,
+  },
+  
+  // Button Container
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    position: 'relative',
+  },
+  
+  // Action Button
+  actionButton: {
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  // Modal Container
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+
+  // List Items - Sleek Design
+  item: {
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    padding: 14,
+    marginVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
+  },
+  itemIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#f0f9ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+    borderWidth: 2,
+    borderColor: '#e0f2fe',
+  },
+  itemContent: {
+    flex: 1,
+  },
+  itemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 6,
+  },
+  merchant: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#1a202c',
+    letterSpacing: -0.2,
+    flex: 1,
+    marginRight: 12,
+  },
+  amount: {
+    fontSize: 17,
+    fontWeight: '800',
+    letterSpacing: -0.3,
+  },
+  positiveAmount: {
+    color: '#059669',
+  },
+  negativeAmount: {
+    color: '#dc2626',
+  },
+  itemDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  sub: {
+    fontSize: 14,
+    color: '#64748b',
+    fontWeight: '500',
+  },
+  description: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 4,
+    fontStyle: 'italic',
+  },
+  statusBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+  },
+  statusText: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  statusPending: {
+    backgroundColor: '#fef3c7',
+    borderWidth: 1,
+    borderColor: '#f59e0b',
+  },
+  statusApproved: {
+    backgroundColor: '#d1fae5',
+    borderWidth: 1,
+    borderColor: '#10b981',
+  },
+  statusRejected: {
+    backgroundColor: '#fee2e2',
+    borderWidth: 1,
+    borderColor: '#ef4444',
+  },
+
+  // Empty and Loading States
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+  },
+  emptyStateText: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1a202c',
+    textAlign: 'center',
+    marginBottom: 12,
+    letterSpacing: -0.3,
+  },
+  emptyStateSubtext: {
+    fontSize: 16,
+    color: '#64748b',
+    textAlign: 'center',
+    marginBottom: 32,
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+  },
+  loadingText: {
+    marginTop: 16,
+    color: '#64748b',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
+  errorText: {
+    color: '#D32F2F',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#1976D2',
+    borderRadius: 4,
+  },
+  retryButtonText: {
+    color: '#fff',
+    fontWeight: '500',
+  },
+
+  // Buttons
+  addButton: {
+    position: 'absolute',
+    bottom: 32,
+    right: 24,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#3b82f6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#3b82f6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+  },
+
+  // Modal Styles
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 24,
+    width: '95%',
+    maxWidth: 420,
+    maxHeight: '90%',
+    minHeight: 360,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.15,
+    shadowRadius: 24,
+    elevation: 12,
+    alignSelf: 'center',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1a202c',
+    letterSpacing: -0.3,
+  },
+  modalCloseButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#f8fafc',
+  },
+  filterSection: {
+    marginBottom: 16,
+  },
+  filterSectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 10,
+    color: '#1a202c',
+    letterSpacing: -0.2,
+  },
+  chip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderColor: '#e2e8f0',
+    backgroundColor: '#ffffff',
+    marginRight: 6,
+    marginBottom: 6,
+  },
+  chipSelected: {
+    backgroundColor: '#dbeafe',
+    borderColor: '#3b82f6',
+  },
+  chipText: {
+    color: '#64748b',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  chipTextSelected: {
+    color: '#1e40af',
+    fontWeight: '700',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 16,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    gap: 12,
+  },
+  button: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  buttonPrimary: {
+    backgroundColor: '#3b82f6',
+    shadowColor: '#3b82f6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  buttonSecondary: {
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 15,
+  },
+  buttonTextSecondary: {
+    color: '#475569',
+    fontWeight: '600',
+    fontSize: 15,
+  },
+});

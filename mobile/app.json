@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "ExpenseApp",
+    "slug": "expense-app",
+    "version": "1.0.0",
+    "scheme": "expenseapp",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4CAF50"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#4CAF50"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan receipts and autofill expense details."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#4CAF50"
+      },
+      "package": "com.expenseapp.mobile",
+      "versionCode": 1,
+      "permissions": ["CAMERA"],
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
