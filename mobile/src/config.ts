@@ -21,7 +21,7 @@ const getDefaultApiUrl = () => {
   }
   
   // In production, use the production API URL
-  return 'https://api.expenseapp.com';
+  return 'https://expenseapp-backend-4m0m.onrender.com';
 };
 
 // Get the API URL from environment variables or use the default

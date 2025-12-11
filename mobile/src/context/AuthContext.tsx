@@ -14,6 +14,7 @@ import {
   LoginResponse
 } from '../api/client';
 import { navigationRef, isNavigationReady, safeResetToLogin } from '../navigation/navigationRef';
+import AppConfig from '../config';
 
 // Types
 interface AuthState {
@@ -58,9 +59,8 @@ const parseJwt = (token?: string | null) => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // For Android Emulator, use 10.0.2.2 (maps to host's localhost)
-  // For physical device, use your PC's IP (e.g., http://10.111.29.25:18080)
-  const [backendUrl, setBackendUrl] = useState<string>('http://10.0.2.2:18080');
+  // Use the backend URL from config (automatically switches between dev and prod)
+  const [backendUrl, setBackendUrl] = useState<string>(AppConfig.api.baseUrl);
   
   const [state, setState] = useState<AuthState>({
     token: null,
