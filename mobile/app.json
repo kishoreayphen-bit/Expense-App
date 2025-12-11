@@ -6,9 +6,9 @@
     "scheme": "expenseapp",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#4CAF50"
     },
@@ -26,11 +26,14 @@
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#4CAF50"
       },
       "package": "com.expenseapp.mobile",
       "versionCode": 1,
-      "permissions": ["CAMERA"],
+      "permissions": [
+        "CAMERA"
+      ],
       "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
@@ -39,7 +42,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "00000000-0000-0000-0000-000000000000"
+        "projectId": "94c49d4b-ebf7-4924-8b75-614ed1bbc0e4"
       }
     }
   }
