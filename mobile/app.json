@@ -6,12 +6,6 @@
     "scheme": "expenseapp",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "icon": "./assets/logo.png",
-    "splash": {
-      "image": "./assets/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#4CAF50"
-    },
     "androidStatusBar": {
       "backgroundColor": "#4CAF50"
     },
@@ -25,10 +19,6 @@
       }
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
-        "backgroundColor": "#4CAF50"
-      },
       "package": "com.expenseapp.mobile",
       "versionCode": 1,
       "permissions": [
