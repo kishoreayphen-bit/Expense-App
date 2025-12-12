@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 export default function LoginScreen() {
   const { login, backendUrl, setBackendUrl } = useAuth();
   const navigation = useNavigation<any>();
-  const [email, setEmail] = useState('admin@demo.local');
-  const [password, setPassword] = useState('Admin@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [baseUrl, setBaseUrl] = useState(backendUrl);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -80,13 +80,16 @@ export default function LoginScreen() {
         start={{ x: 0, y: 0 }}
         end={{ x: 0.5, y: 1 }}
       />
-      {Platform.OS === 'ios' ? (
-        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-          <View style={styles.centerWrap} pointerEvents="box-none">
-            <View
-              // Replace ScrollView with View to avoid touch competition on Android
-              style={{ paddingBottom: 24, alignItems: 'stretch', flexGrow: 1 }}
-            >
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        style={{ flex: 1 }}
+      >
+        <ScrollView 
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.centerWrap}>
               <View style={styles.hero}>
                 <View style={styles.heroIconWrap}>
                   <MaterialIcons name="account-balance-wallet" size={36} color="#22C55E" />
@@ -190,110 +193,8 @@ export default function LoginScreen() {
               </View>
             </View>
           </View>
-        </KeyboardAvoidingView>
-      ) : (
-        <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-          <View style={styles.centerWrap} pointerEvents="box-none">
-            <View
-              // Replace ScrollView with View to avoid touch competition on Android
-              style={{ paddingBottom: 24, alignItems: 'stretch', flexGrow: 1 }}
-            >
-              <View style={styles.hero}>
-                <View style={styles.heroIconWrap}>
-                  <MaterialIcons name="account-balance-wallet" size={36} color="#22C55E" />
-                </View>
-                <Text style={styles.heroTitle}>Expense Tracker</Text>
-                <Text style={styles.heroSubtitle}>Fast. Simple. Insightful.</Text>
-              </View>
-
-              <View style={styles.card}>
-                <View style={{ alignItems:'center', marginBottom: 6 }}>
-                  <Text style={styles.title}>Welcome back</Text>
-                  <Text style={styles.subtitle}>Sign in to continue</Text>
-                </View>
-
-                <Text style={styles.label}>Email</Text>
-                <View style={[styles.inputRow, emailFocused && styles.inputRowFocused, { zIndex: 2 }]} collapsable={false}>
-                  <MaterialIcons name="email" size={20} color="#64748B" style={styles.inputIcon} />
-                  <TextInput
-                    ref={emailRef}
-                    style={styles.inputField}
-                    placeholder="you@example.com"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    autoComplete="email"
-                    textContentType="emailAddress"
-                    keyboardType="email-address"
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholderTextColor="#94A3B8"
-                    onFocus={() => setEmailFocused(true)}
-                    onBlur={() => setEmailFocused(false)}
-                    blurOnSubmit={false}
-                    returnKeyType="next"
-                    onSubmitEditing={() => passwordRef.current?.focus()}
-                    importantForAutofill="no"
-                    editable
-                    onTouchStart={() => emailRef.current?.focus()}
-                  />
-                </View>
-
-                <Text style={styles.label}>Password</Text>
-                <View style={[styles.inputRow, passwordFocused && styles.inputRowFocused, { zIndex: 1 }]} collapsable={false}>
-                  <MaterialIcons name="lock" size={20} color="#64748B" style={styles.inputIcon} />
-                  <TextInput
-                    ref={passwordRef}
-                    style={styles.inputField}
-                    placeholder="••••••••"
-                    secureTextEntry={!showPassword}
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholderTextColor="#94A3B8"
-                    onFocus={() => setPasswordFocused(true)}
-                    onBlur={() => setPasswordFocused(false)}
-                    returnKeyType="done"
-                    importantForAutofill="no"
-                    autoComplete="password"
-                    textContentType="password"
-                    editable
-                    onTouchStart={() => passwordRef.current?.focus()}
-                  />
-                  <TouchableOpacity
-                    accessibilityRole="button"
-                    accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}
-                    onPress={() => setShowPassword((v) => !v)}
-                    style={{ paddingHorizontal: 10, paddingVertical: 8, width: 40, alignItems: 'center' }}
-                    hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-                  >
-                    <MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color="#64748B" />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.actionsRow}>
-                  <View style={{ flexDirection:'row', alignItems:'center' }}>
-                    <MaterialIcons name="lock-outline" size={14} color="#64748B" />
-                    <Text style={styles.hintText}> Your data is securely encrypted</Text>
-                  </View>
-                  <TouchableOpacity>
-                    <Text style={styles.linkText}>Forgot password?</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity style={[styles.primaryBtn, loading && { opacity: 0.85 }]} onPress={onLogin} disabled={loading}>
-                  {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.primaryBtnText}>Sign in</Text>}
-                </TouchableOpacity>
-
-                <View style={styles.altRow}>
-                  <Text style={styles.altText}>Don't have an account? </Text>
-                  <TouchableOpacity onPress={()=> navigation.navigate('Register')}>
-                    <Text style={styles.altLink}>Create one</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-      )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
